@@ -9,6 +9,8 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
+use in console: game_codebreaker start
+
 gem 'game_codebreaker'
 ```
 
