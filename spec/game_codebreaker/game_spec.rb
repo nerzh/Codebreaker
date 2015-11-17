@@ -107,7 +107,7 @@ module GameCodebreaker
 
       it 'hints must not be repeating ' do
         game.get_hint
-        expect( game.hints ).to include( "1-").or include ("-2") 
+        expect( game.hints ).to include( "1-").and include ("-2") 
       end
 
     end
