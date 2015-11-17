@@ -1,0 +1,97 @@
+#!/usr/bin/env ruby
+
+require "game_codebreaker"
+
+module GameCodebreaker
+
+  class Interface
+
+    def initialize
+      @games = []
+      start
+    end
+
+    def start
+      level = question( mess 3 )
+      length = question( mess 7 ).to_i
+      game = Game.new(level: ( Options.level(level) )[0], hint: (Options.level(level) )[1], length: length)
+      game.generate_code
+      play( game )
+    end
+
+    def play( game )
+      string = question( mess 1 )
+      game.respond( string )
+      string == "get hint" ? ( p game.hints.last ) : ( p game.history.last.last )
+      p game.code if string == "cheat"
+      ( p mess 5; exit 1 ) if string == "exit"
+      
+      if game.game_over?
+        game.win? ? ( p "YOU WIN !" ) : ( p "AHAHA... LOSER !" )
+        ( @games << game; start ) if question( mess 2 ).capitalize == "Y"
+        @games << game
+        if user_data = get_user_data
+          user = Game.save( user_data, @games )
+          print_info( Memory.info(user) )
+        end
+        p mess 5
+        exit 1
+      end
+      play( game )
+    end
+
+    def question( mess )
+      p mess
+      value = $stdin.gets.chomp
+    end
+
+    def exit
+      at_exit { mess 5 }
+    end
+
+    def get_user_data
+      if question( mess 4 ).capitalize == "Y"
+        user = question( mess 6 )
+        user_data unless user =~ /^(.+)\s(.+)\s(.+)$/
+        return array = [name = $1, surname = $2, age = $3]
+      end
+      false
+    end
+
+    def print_info( array )
+      p "Name:                    " << array[0]
+      p "Surname:                 " << array[1]
+      p "Age                      " << array[2]
+      p "Total games              " << array[3].to_s
+      p "Total wins               " << array[4].to_s
+      p "Total losses             " << array[5].to_s
+      p "Average amount of turns  " << array[6].to_s
+      p "Average amount of level  " << array[7].to_s
+    end
+
+    def mess( value )
+      case value
+	      when 1
+	        %Q^ Enter your integer and press 'Enter' ^
+	      when 2
+	        %Q^ Replay ? -- Y/N ^
+	      when 3
+	        %Q^ Select and enter level. ( low | normal | hard ) ^
+	      when 4
+	        %Q^ Save games? -- Y/N ^
+	      when 5
+	        %Q^ I am waiting the GARBAGE COLLECTOR ^
+	      when 6
+	        %Q^ Please enter your data separated by a space and press 'Enter'. Example: Name Surname Age ^
+	      when 7
+	        %Q^ Please enter quantity digits ^
+	      else
+	        %Q^ читер ? ^
+      end
+    end
+
+  end
+end
+
+( p "Game Code-Breaker for RubyGarage"; GameCodebreaker::Interface.new ) if ARGV[0] == "start"
+
