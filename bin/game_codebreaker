@@ -13,7 +13,7 @@ module GameCodebreaker
 
     def start
       level = question( mess 3 )
-      length = question( mess 7 ).to_i
+      length = question( mess 7 ).to_i; length = 4 if length == 0
       game = Game.new(level: ( Options.level(level) )[0], hint: (Options.level(level) )[1], length: length)
       game.generate_code
       play( game )
@@ -71,22 +71,22 @@ module GameCodebreaker
 
     def mess( value )
       case value
-	      when 1
-	        %Q^ Enter your integer and press 'Enter' ^
-	      when 2
-	        %Q^ Replay ? -- Y/N ^
-	      when 3
-	        %Q^ Select and enter level. ( low | normal | hard ) ^
-	      when 4
-	        %Q^ Save games? -- Y/N ^
-	      when 5
-	        %Q^ I am waiting the GARBAGE COLLECTOR ^
-	      when 6
-	        %Q^ Please enter your data separated by a space and press 'Enter'. Example: Name Surname Age ^
-	      when 7
-	        %Q^ Please enter quantity digits ^
-	      else
-	        %Q^ читер ? ^
+        when 1
+          %Q^ Enter your integer and press 'Enter' ^
+        when 2
+          %Q^ Replay ? -- Y/N ^
+        when 3
+          %Q^ Select and enter level. ( low | normal | hard ) ^
+        when 4
+          %Q^ Save games? -- Y/N ^
+        when 5
+          %Q^ I am waiting the GARBAGE COLLECTOR ^
+        when 6
+          %Q^ Please enter your data separated by a space and press 'Enter'. Example: Name Surname Age ^
+        when 7
+          %Q^ Please enter quantity digits ^
+        else
+          %Q^ читер ? ^
       end
     end
 
