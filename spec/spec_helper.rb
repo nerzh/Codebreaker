@@ -2,3 +2,4 @@
 require 'bundler/setup'
 require 'game_codebreaker'
 require 'rspec/collection_matchers'
+load 'bin/game_codebreaker'

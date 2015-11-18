@@ -24,7 +24,7 @@ module GameCodebreaker
       game.respond( string )
       string == "get hint" ? ( p game.hints.last ) : ( p game.history.last.last )
       p game.code if string == "cheat"
-      ( p mess 5; exit 1 ) if string == "exit"
+      out if string == "exit"
       
       if game.game_over?
         game.win? ? ( p "YOU WIN !" ) : ( p "AHAHA... LOSER !" )
@@ -34,8 +34,7 @@ module GameCodebreaker
           user = Game.save( user_data, @games )
           print_info( Memory.info(user) )
         end
-        p mess 5
-        exit 1
+        out
       end
       play( game )
     end
@@ -45,8 +44,9 @@ module GameCodebreaker
       value = $stdin.gets.chomp
     end
 
-    def exit
-      at_exit { mess 5 }
+    def out
+      p mess 5
+      exit 1
     end
 
     def get_user_data

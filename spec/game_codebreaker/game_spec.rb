@@ -5,7 +5,6 @@ module GameCodebreaker
 	describe Game do
 
     let(:game) { Game.new }
-    # let(:game_over) { Game.new(game_over: true) }
 
     context "generate_code" do
       it 'must return the string with digits between 1..6' do
@@ -53,7 +52,7 @@ module GameCodebreaker
         expect( game.process(skynet, human) ).to eq( "----" )
       end
 
-      context '' do
+      context 'get_hint' do
 
         let(:skynet) { "0011".split(//) }
 
@@ -88,14 +87,14 @@ module GameCodebreaker
       end
 
       it 'standard behavior - turns must be changed' do
-        allow(game).to receive(:game_over).and_return(true)
+        allow(game).to receive(:check_game).and_return(true)
         allow(game).to receive(:process).and_return(true)
         expect{ game.respond( string ) }.to change{ game.turns }.by(1)
       end
 
       it 'standard behavior - @history must to have the array' do
         game3.respond( string )
-        allow(game).to receive(:game_over).and_return(true)
+        allow(game).to receive(:check_game).and_return(true)
         allow(game).to receive(:process).and_return("++++")
         expect( game3.history ).to include( ["1234", "1234", "++++"] )
       end
@@ -107,25 +106,35 @@ module GameCodebreaker
 
       it 'hints must not be repeating ' do
         game.get_hint
-        expect( game.hints ).to include( "1-").and include ("-2") 
+        expect( game.hints ).to include( "1-").and include ("-2")
+      end
+
+      it 'hint must be change' do
+        game.get_hint
+        expect{ game.get_hint }.to change{ game.hint }.by(-1) 
+      end
+
+    end
+
+    context "check_game" do
+
+      let(:game2) { Game.new( turns: 15 ) } 
+
+      it 'you win and game over' do
+        game.check_game( "++++" )
+        expect( game.win ).to eq( true )
+        expect( game.game_over ).to eq( true )
+      end
+
+      it 'you lose and game over' do
+        game2.check_game( "+++-" )
+        expect( game2.win ).to eq( false )
+        expect( game2.game_over ).to eq( true )
       end
 
     end
 
 	end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -43,7 +43,7 @@ module GameCodebreaker
       human = string.split(//)
       list = [@code, human.join("")]
       result = process( skynet, human )
-      game_over( result )
+      check_game( result )
       @turns += 1; @history << ( list << result )
     end
 
@@ -59,7 +59,7 @@ module GameCodebreaker
       @hint -= 1; @hints << result;
     end
 
-    def game_over( string )
+    def check_game( string )
       @game_over = true if @turns == @level
       (@win = true; @game_over = true) if string.count("+") == @length
     end
