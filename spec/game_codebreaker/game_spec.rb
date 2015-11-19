@@ -2,7 +2,7 @@ require 'spec_helper'
 
 module GameCodebreaker
 
-	describe Game do
+  describe Game do
 
     let(:game) { Game.new }
 
@@ -52,7 +52,7 @@ module GameCodebreaker
         expect( game.process(skynet, human) ).to eq( "----" )
       end
 
-      context 'get_hint' do
+      context 'repeating' do
 
         let(:skynet) { "0011".split(//) }
 
@@ -106,7 +106,7 @@ module GameCodebreaker
 
       it 'hints must not be repeating ' do
         game.get_hint
-        expect( game.hints ).to include( "1-").and include ("-2")
+        expect( game.hints ).to eq( ["1-", "-2"] )
       end
 
       it 'hint must be change' do
@@ -134,7 +134,7 @@ module GameCodebreaker
 
     end
 
-	end
+  end
 end
 
 

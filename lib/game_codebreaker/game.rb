@@ -1,6 +1,4 @@
 require "game_codebreaker/options"
-require "game_codebreaker/memory"
-require "game_codebreaker/user"
 
 module GameCodebreaker
   class Game
@@ -72,31 +70,7 @@ module GameCodebreaker
       @win
     end
 
-    def self.save( user_data, games )
-      user = User.new( user_data[0], user_data[1], user_data[2], games )
-      memory = Memory.new unless memory = Memory.load("./dump")
-      memory.exists?( user ) ? ( memory.add_games(user); user = memory.get_user(user) ) : memory.users << user
-      memory.save("./dump")
-      user
-    end
-
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
