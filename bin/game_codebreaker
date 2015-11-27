@@ -12,14 +12,14 @@ module GameCodebreaker
     end
 
     def start
-      level = question( mess 3 )
+      level = question( mess :level )
       length = question( mess 7 ).to_i; length = 4 if length == 0
       game = Game.new(level: ( Options.level(level) )[:level], hint: (Options.level(level) )[:hint], length: length)
       play( game )
     end
 
     def play( game )
-      string = question( mess 1 )
+      string = question( mess :enter )
       game.respond( string )
       string == "get hint" ? ( game.get_hint; p game.hints.last ) : ( p game.history.last.last )
       p game.code if string == "cheat"
@@ -27,7 +27,7 @@ module GameCodebreaker
       
       if game.game_over?
         game.win? ? ( p "YOU WIN !" ) : ( p "YOU LOSE !" )
-        ( @games << game; start ) if question( mess 2 ).capitalize == "Y"
+        ( @games << game; start ) if question( mess :replay ).capitalize == "Y"
         @games << game
         if user_data = get_user_data
           save( user_data, @games )
@@ -43,13 +43,13 @@ module GameCodebreaker
     end
 
     def out
-      p mess 5
+      p mess :collector
       exit 1
     end
 
     def get_user_data
-      if question( mess 4 ).capitalize == "Y"
-        user = question( mess 6 )
+      if question( mess :save ).capitalize == "Y"
+        user = question( mess :data )
         user_data unless user =~ /^(.+)\s(.+)\s(.+)$/
         return array = [name = $1, surname = $2, age = $3]
       end
@@ -76,19 +76,19 @@ module GameCodebreaker
 
     def mess( value )
       case value
-        when 1
+        when :enter
           %Q^ Enter your integer and press 'Enter' ^
-        when 2
+        when :replay
           %Q^ Replay ? -- Y/N ^
-        when 3
+        when :level
           %Q^ Select and enter level. ( low | normal | hard ) ^
-        when 4
+        when :save
           %Q^ Save games? -- Y/N ^
-        when 5
+        when :collector
           %Q^ I am waiting the GARBAGE COLLECTOR ^
-        when 6
+        when :data
           %Q^ Please enter your data separated by a space and press 'Enter'. Example: Name Surname Age ^
-        when 7
+        when :length
           %Q^ Please enter quantity digits ^
         else
           %Q^ читер ? ^

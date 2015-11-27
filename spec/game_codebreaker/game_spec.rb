@@ -8,7 +8,7 @@ module GameCodebreaker
 
     context "generate_code" do
       it 'must return the string with digits between 1..6' do
-        game.generate_code
+        game.send( :generate_code )
         expect(game.code).to match(/[1-6]+/)
       end
     end
@@ -19,37 +19,37 @@ module GameCodebreaker
 
       it 'with input the string "0000"' do
         human = "0000".split(//)
-        expect( game.process(skynet, human) ).to eq( "" )
+        expect( game.send( :process, skynet, human ) ).to eq( "" )
       end
 
       it 'with input the string "0001"' do
         human = "0001".split(//)
-        expect( game.process(skynet, human) ).to eq( "-" )
+        expect( game.send( :process, skynet, human ) ).to eq( "-" )
       end
 
       it 'with input the string "1111"' do
         human = "1111".split(//)
-        expect( game.process(skynet, human) ).to eq( "+" )
+        expect( game.send( :process, skynet, human ) ).to eq( "+" )
       end
 
       it 'with input the string "1200"' do
         human = "1200".split(//)
-        expect( game.process(skynet, human) ).to eq( "++" )
+        expect( game.send( :process, skynet, human ) ).to eq( "++" )
       end
 
       it 'with input the string "1243"' do
         human = "1243".split(//)
-        expect( game.process(skynet, human) ).to eq( "++--" )
+        expect( game.send( :process, skynet, human ) ).to eq( "++--" )
       end
 
       it 'with input the string "1234"' do
         human = "1234".split(//)
-        expect( game.process(skynet, human) ).to eq( "++++" )
+        expect( game.send( :process, skynet, human ) ).to eq( "++++" )
       end
 
       it 'with input the string "4321"' do
         human = "4321".split(//)
-        expect( game.process(skynet, human) ).to eq( "----" )
+        expect( game.send( :process, skynet, human ) ).to eq( "----" )
       end
 
       context 'repeating' do
@@ -58,12 +58,12 @@ module GameCodebreaker
 
         it 'with repeating digits in code' do
           human = "0123".split(//)
-          expect( game.process(skynet, human) ).to eq( "+-" )
+          expect( game.send( :process, skynet, human ) ).to eq( "+-" )
         end
 
         it 'with repeating digits in code' do
           human = "1100".split(//)
-          expect( game.process(skynet, human) ).to eq( "----" )
+          expect( game.send( :process, skynet, human ) ).to eq( "----" )
         end
 
       end
@@ -78,12 +78,6 @@ module GameCodebreaker
 
       it 'when (game_over = true), turns not be changed' do
         expect{ game2.respond( string ) }.not_to change{ game.turns }
-      end
-
-      it 'when (string = "get hint"), turns not be changed' do
-        string = "get hint"
-        allow(game).to receive(:get_hint).and_return(true)
-        expect{ game.respond( string ) }.not_to change{ game.turns }
       end
 
       it 'standard behavior - turns must be changed' do
