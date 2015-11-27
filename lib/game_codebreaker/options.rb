@@ -4,13 +4,13 @@ module GameCodebreaker
     def self.level( level=nil )
       case level
         when "low" 
-          [ 15, 2 ]
+          { level: 15, hint: 2 }
         when "normal"
-          [ 10, 1 ]
+          { level: 10, hint: 1 }
         when "hard"
-          [ 5, 0 ]
+          { level: 5, hint: 0 }
         else
-          [ 15, 2 ]
+          { level: 15, hint: 2 }
       end
     end
 

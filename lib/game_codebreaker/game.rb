@@ -5,16 +5,18 @@ module GameCodebreaker
 
     JUST_A_MAGIC_NUMBER = 10
 
-    attr_accessor :code, :length, :level, :turns, :history, :hint, :win, :hints, :game_over
+    attr_reader :code, :length, :level, :turns, :history, :hint, :win, :hints, :game_over
 
-    def initialize( code: "", length: 4, level: (Options.level)[0], turns: 0, history: [],
-                    hint: (Options.level)[1], hinted: 0, win: false, game_over: false,
+    def initialize( code: "", length: 4, level: (Options.level)[:level], turns: 0, history: [],
+                    hint: (Options.level)[:hint], hinted: 0, win: false, game_over: false,
                     hints: [] )
       @code, @length     = code, length
       @level, @turns     = level, turns
       @history, @hint    = history, hint
       @hinted, @win      = hinted, win
       @hints, @game_over = hints, game_over
+      generate_code if @code == ""
+      raise ArgumentError, 'Length code must be equal to variable with name \'length\'' if @code.size != @length
     end
 
     def respond( string )

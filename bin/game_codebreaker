@@ -14,8 +14,7 @@ module GameCodebreaker
     def start
       level = question( mess 3 )
       length = question( mess 7 ).to_i; length = 4 if length == 0
-      game = Game.new(level: ( Options.level(level) )[0], hint: (Options.level(level) )[1], length: length)
-      game.generate_code
+      game = Game.new(level: ( Options.level(level) )[:level], hint: (Options.level(level) )[:hint], length: length)
       play( game )
     end
 
