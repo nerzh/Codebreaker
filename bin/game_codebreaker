@@ -22,7 +22,7 @@ module GameCodebreaker
     def play( game )
       string = question( mess 1 )
       game.respond( string )
-      string == "get hint" ? ( p game.hints.last ) : ( p game.history.last.last )
+      string == "get hint" ? ( game.get_hint; p game.hints.last ) : ( p game.history.last.last )
       p game.code if string == "cheat"
       out if string == "exit"
       

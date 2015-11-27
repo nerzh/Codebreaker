@@ -17,26 +17,8 @@ module GameCodebreaker
       @hints, @game_over = hints, game_over
     end
 
-    def generate_code
-      @length.times{ @code << rand(1..6).to_s }
-    end
-
-    def process( skynet, human )
-      result = ""
-      @length.times do |i|
-        if skynet[i] == human[i]
-          result += "+"
-          skynet[i], human[i] = nil, nil
-        end
-      end
-      skynet.compact!; human.compact!;
-      human.each { |val| result += "-" if skynet.include?( val ) }
-      result
-    end
-
     def respond( string )
       return if game_over?
-      get_hint and return if string == "get hint"
       skynet = Array.new(@code.split(//))
       human = string.split(//)
       list = [@code, human.join("")]
@@ -54,7 +36,7 @@ module GameCodebreaker
       ( @length*JUST_A_MAGIC_NUMBER ).times { pozition = rand( @length ); break unless old_pozitions.include?( pozition ) }
       result = ""
       @length.times { |i| pozition == i ? result << @code.to_s[i] : result << "-" }
-      @hint -= 1; @hints << result;
+      @hint -= 1; @hints << result
     end
 
     def check_game( string )
@@ -68,6 +50,25 @@ module GameCodebreaker
 
     def win?
       @win
+    end
+
+    private
+
+    def generate_code
+      @length.times{ @code << rand(1..6).to_s }
+    end
+
+    def process( skynet, human )
+      result = ""
+      @length.times do |i|
+        if skynet[i] == human[i]
+          result += "+"
+          skynet[i], human[i] = nil, nil
+        end
+      end
+      skynet.compact!; human.compact!;
+      human.each { |val| result += "-" if skynet.include?( val ) }
+      result
     end
 
   end
