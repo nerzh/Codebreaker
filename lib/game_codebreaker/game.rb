@@ -29,7 +29,7 @@ module GameCodebreaker
       @turns += 1; @history << ( list << result )
     end
 
-    def get_hint 
+    def get_hint
       ( @hints << "there is no hints anymore"; @hints.uniq!; return ) if @hint == 0
       pozition = nil; old_pozitions = []
       @hints.each do |str|

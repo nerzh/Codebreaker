@@ -11,3 +11,4 @@
 *~
 *.gem
 /dump
+/.byebug_history

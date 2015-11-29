@@ -6,6 +6,21 @@ module GameCodebreaker
 
     let(:game) { Game.new }
 
+    context "initialize" do
+      it 'return error if Length code must not be equal to variable with name \'length\'' do
+        expect{ Game.new( code: '1234', length: 5) }.to raise_error
+      end
+
+      it 'code is not changed' do
+        game = Game.new( code: '5555' )
+        expect( game.code ).to eq( '5555' )
+      end
+
+      it 'code must be exists' do
+        expect( game.code ).not_to eq( '' )
+      end
+    end
+
     context "generate_code" do
       it 'must return the string with digits between 1..6' do
         game.send( :generate_code )
@@ -116,14 +131,14 @@ module GameCodebreaker
 
       it 'you win and game over' do
         game.check_game( "++++" )
-        expect( game.win ).to eq( true )
-        expect( game.game_over ).to eq( true )
+        expect( game.win? ).to eq( true )
+        expect( game.game_over? ).to eq( true )
       end
 
       it 'you lose and game over' do
         game2.check_game( "+++-" )
-        expect( game2.win ).to eq( false )
-        expect( game2.game_over ).to eq( true )
+        expect( game2.win? ).to eq( false )
+        expect( game2.game_over? ).to eq( true )
       end
 
     end
