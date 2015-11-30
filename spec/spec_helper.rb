@@ -2,9 +2,7 @@
 require 'bundler/setup'
 require 'game_codebreaker'
 require 'rspec/collection_matchers'
-load 'bin/game_codebreaker'
-
-
+load    'bin/game_codebreaker'
 
 
 RSpec.configure do |config|
@@ -12,6 +10,10 @@ RSpec.configure do |config|
   config.after(:each) do
     dir = "./spec/game_codebreaker/fixtures/save_dump"
     File.delete( dir ) if File.exists?( dir )
+  end
+
+  config.mock_with :rspec do |c|
+    c.syntax = [:should, :expect]
   end
 
 end
