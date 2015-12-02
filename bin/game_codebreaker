@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require "game_codebreaker"
+require_relative '../lib/game_codebreaker'
 
 module GameCodebreaker
 

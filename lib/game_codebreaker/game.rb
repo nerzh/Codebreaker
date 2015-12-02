@@ -1,4 +1,4 @@
-require "game_codebreaker/options"
+require_relative "options"
 
 module GameCodebreaker
   class Game

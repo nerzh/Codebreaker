@@ -1,4 +1,4 @@
-require "game_codebreaker/user"
+require_relative "user"
 
 module GameCodebreaker
   class Memory

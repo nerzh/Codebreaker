@@ -1,7 +1,8 @@
-require "game_codebreaker/version"
-require "game_codebreaker/user"
-require "game_codebreaker/memory"
-require "game_codebreaker/game"
+require_relative "game_codebreaker/version"
+require_relative "game_codebreaker/user"
+require_relative "game_codebreaker/options"
+require_relative "game_codebreaker/memory"
+require_relative "game_codebreaker/game"
 
 module GameCodebreaker
 end
