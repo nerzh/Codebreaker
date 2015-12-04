@@ -26,8 +26,8 @@ module GameCodebreaker
       human = string.split(//)
       list = [@code, human.join("")]
       result = process( skynet, human )
-      check_game( result )
       @turns += 1; @history << ( list << result )
+      check_game( result )
     end
 
     def get_hint
