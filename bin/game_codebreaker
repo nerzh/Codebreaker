@@ -14,7 +14,8 @@ module GameCodebreaker
       level = question( mess :level )
       length = question( mess :length ).to_i
       length = 4 if length <= 0
-      game = Game.new(level: (Options.level(level))[:level], hint: (Options.level(level))[:hint], length: length)
+      game = Game.new(level: (Options.level(level))[:level], hint: (Options.level(level))[:hint], 
+                      length: length, level_name: level)
       play( game )
     end
 
